@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+
+<h:head>
+    <title>Dados Cadastrados</title>
+</h:head>
+<h:body>
+    <h3>Dados Cadastrados:</h3>
+    <table border="1">
+        <tr>
+            <th>Nome</th>
+            <th>Gênero</th>
+            <th>Idade</th>
+            <th>CEP</th>
+            <th>Rua</th>
+            <th>Estado</th>
+            <th>Cidade</th>
+        </tr>
+        <tr>
+            <td>#{helloBean.nome}</td>
+            <td>#{helloBean.genero}</td>
+            <td>#{helloBean.idade}</td>
+            <td>#{helloBean.cep}</td>
+            <td>#{helloBean.rua}</td>
+            <td>#{helloBean.estado}</td>
+            <td>#{helloBean.cidade}</td>
+        </tr>
+    </table>
+</h:body>
+</html>
