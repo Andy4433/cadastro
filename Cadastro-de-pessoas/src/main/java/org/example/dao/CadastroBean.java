@@ -5,6 +5,7 @@ import org.example.HelloBean;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,6 +14,7 @@ import java.sql.SQLException;
 @ManagedBean(name = "CadastroBean")
 @SessionScoped
 public class CadastroBean {
+    @Inject
     private HelloBean helloBean;
 
     public String cadastrar() {

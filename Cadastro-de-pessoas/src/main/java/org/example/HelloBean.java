@@ -17,7 +17,7 @@ public class HelloBean implements Serializable {
     private int age;
     private String gender;
     private String cep;
-    private float num;
+    private int num;
     private String rua;
     private String estado;
     private String cidade;
@@ -51,15 +51,6 @@ public class HelloBean implements Serializable {
 
     public void setGender(String gender) {
         this.gender = gender;
-    }
-
-
-    public float getNum() {
-        return num;
-    }
-
-    public void setNum(float num) {
-        this.num = num;
     }
 
     public String getEstado() {
@@ -97,5 +88,13 @@ public class HelloBean implements Serializable {
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
     }
 }

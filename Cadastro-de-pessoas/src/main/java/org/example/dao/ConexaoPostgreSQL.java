@@ -16,11 +16,11 @@ public class ConexaoPostgreSQL {
 
             // Conectar ao banco de dados "postgres"
             conexao = DriverManager.getConnection(
-                    "jdbc:postgresql://localhost:5432/postgres",
+                    "jdbc:postgresql://localhost:5432/cadastros",
                     "postgres", "xxxxxxx");
 
-            if (!existeBancoDeDados(conexao, "Cadastros")) {
-                criarBancoDeDados(conexao, "Cadastros");
+            if (!existeBancoDeDados(conexao, "cadastros")) {
+                criarBancoDeDados(conexao, "cadastros");
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -34,6 +34,7 @@ public class ConexaoPostgreSQL {
     }
 
     private boolean existeBancoDeDados(Connection conexao, String nomeBanco) throws SQLException {
+        System.out.println(nomeBanco);
         Statement stmt = conexao.createStatement();
         String query = "SELECT 1 FROM pg_database WHERE datname = '" + nomeBanco + "'";
         return stmt.executeQuery(query).next();
