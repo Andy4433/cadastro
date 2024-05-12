@@ -9,17 +9,26 @@ public class ConexaoPostgreSQL {
 
     public Connection conectar() throws SQLException {
         System.out.println("Início PostgreSQLMySQL");
-        Connection conexao = DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/Cadastros",
-                "postgres", "admin");
-
+        Connection conexao = null;
         try {
+            // Registrar o driver JDBC
+            Class.forName("org.postgresql.Driver");
+
+            // Conectar ao banco de dados "postgres"
+            conexao = DriverManager.getConnection(
+                    "jdbc:postgresql://localhost:5432/postgres",
+                    "postgres", "xxxxxxx");
+
             if (!existeBancoDeDados(conexao, "Cadastros")) {
                 criarBancoDeDados(conexao, "Cadastros");
             }
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-            throw e;
+            try {
+                throw e;
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
         }
         return conexao;
     }
