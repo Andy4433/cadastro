@@ -3,16 +3,22 @@ package org.example;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import java.util.Random;
 
 import java.io.Serializable;
+import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 @ManagedBean
 @SessionScoped
 public class HelloBean implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    private static final Set<Integer> usedIds = ConcurrentHashMap.newKeySet();
 
-    private String id;
+
+    private int id;
     private String name;
     private int age;
     private String gender;
@@ -22,11 +28,13 @@ public class HelloBean implements Serializable {
     private String estado;
     private String cidade;
 
-    public HelloBean() {
-        this.id = UUID.randomUUID().toString();
-    }
-
-    public String getId() {
+    public int getId() {
+        Random random = new Random();
+        int id;
+        do {
+            id = random.nextInt(1000000); // Modify the range as needed
+        } while (usedIds.contains(id));
+        usedIds.add(id);
         return id;
     }
     public String getName() {

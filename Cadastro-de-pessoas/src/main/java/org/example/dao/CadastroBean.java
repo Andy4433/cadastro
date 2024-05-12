@@ -36,10 +36,11 @@ public class CadastroBean implements Serializable {
             PreparedStatement stmtTabelaUsuario = conexao.prepareStatement(sqlTabelaUsuario);
             String sqlUsuario = "INSERT INTO tabela_usuario (id, nome, idade, genero) VALUES (?,?, ?, ?)";
             PreparedStatement stmtUsuario = conexao.prepareStatement(sqlUsuario);
-            stmtUsuario.setString(1, helloBean.getId());
-            stmtUsuario.setString(1, helloBean.getName());
-            stmtUsuario.setInt(2, helloBean.getAge());
-            stmtUsuario.setString(3, helloBean.getGender());
+            stmtUsuario.setInt(1, helloBean.getId());
+            stmtUsuario.setString(2, helloBean.getName());
+            stmtUsuario.setInt(3, helloBean.getAge());
+            stmtUsuario.setString(4, helloBean.getGender());
+
             stmtUsuario.executeUpdate();
             stmtUsuario.close();
 

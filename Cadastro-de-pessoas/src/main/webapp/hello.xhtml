@@ -17,12 +17,8 @@
             <p:outputLabel for="name" value="Nome:" />
             <h:inputText id="name" value="#{helloBean.name}" />
 
-            <p:outputLabel for="gender" value="Gênero:" />
-            <h:selectOneMenu id="gender" value="#{helloBean.gender}">
-                <f:selectItem itemLabel="Selecione" itemValue="" />
-                <f:selectItem itemLabel="M" itemValue="M" />
-                <f:selectItem itemLabel="F" itemValue="F" />
-            </h:selectOneMenu>
+            <p:outputLabel for="gender" value="Genero:" />
+            <h:inputText id="gender" value="#{helloBean.gender}" />
 
             <p:outputLabel for="age" value="Idade:" />
             <h:inputText id="age" value="#{helloBean.age}" />
