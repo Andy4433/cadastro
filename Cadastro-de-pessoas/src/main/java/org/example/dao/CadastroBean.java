@@ -1,28 +1,25 @@
 package org.example.dao;
 
-import org.example.HelloBean;
+import java.io.IOException;
+import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
-import java.io.IOException;
-import java.sql.*;
+
+import org.example.dao.ConexaoPostgreSQL;
+import org.example.HelloBean;
 
 @ManagedBean(name = "CadastroBean")
-@SessionScoped
-public class CadastroBean {
-    @ManagedProperty(value="#{HelloBean}")
-    private HelloBean helloBean;
+public class CadastroBean implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-    public HelloBean getHelloBean() {
-        return helloBean;
-    }
+    private HelloBean helloBean = new HelloBean();
 
-    public void setHelloBean(HelloBean helloBean) {
-        this.helloBean = helloBean;
-    }
+    // Getters e Setters do helloBean (remova-os se não forem necessários)
 
     public String cadastrar() {
         try {
@@ -70,4 +67,3 @@ public class CadastroBean {
         }
     }
 }
-
