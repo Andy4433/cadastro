@@ -8,7 +8,6 @@ import java.sql.Statement;
 public class ConexaoPostgreSQL {
 
     public Connection conectar() throws SQLException {
-        System.out.println("Início PostgreSQLMySQL");
         Connection conexao = null;
         try {
             // Registrar o driver JDBC
@@ -34,7 +33,6 @@ public class ConexaoPostgreSQL {
     }
 
     private boolean existeBancoDeDados(Connection conexao, String nomeBanco) throws SQLException {
-        System.out.println(nomeBanco);
         Statement stmt = conexao.createStatement();
         String query = "SELECT 1 FROM pg_database WHERE datname = '" + nomeBanco + "'";
         return stmt.executeQuery(query).next();

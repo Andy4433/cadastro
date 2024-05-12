@@ -25,25 +25,31 @@ public class CadastroBean implements Serializable {
 
     public String cadastrar() {
         try (Connection conexao = new ConexaoPostgreSQL().conectar()) {
-            System.out.println("Conexão com o banco de dados estabelecida com sucesso!");
 
             // Criar tabela se não existir
             String sqlTabelaUsuario = "CREATE TABLE IF NOT EXISTS tabela_usuario (id SERIAL PRIMARY KEY, nome VARCHAR(100), idade INTEGER, genero VARCHAR(1))";
             try (PreparedStatement stmtTabelaUsuario = conexao.prepareStatement(sqlTabelaUsuario)) {
                 stmtTabelaUsuario.executeUpdate();
-                System.out.println("Tabela criada");
+
             }
 
 
-            String sqlUsuario = "INSERT INTO tabela_usuario (id, nome, idade, genero) VALUES (?, ?, ?, ?)";
-            try (PreparedStatement stmtUsuario = conexao.prepareStatement(sqlUsuario)) {
-                stmtUsuario.setInt(1, helloBean.getId());
-                stmtUsuario.setString(2, helloBean.getName());
-                stmtUsuario.setInt(3, helloBean.getAge());
-                stmtUsuario.setString(4, helloBean.getGender());
+            String sqlUsuario = "INSERT INTO tabela_usuario (nome, idade, genero) VALUES (?, ?, ?)";
+            try (PreparedStatement stmtUsuario = conexao.prepareStatement(sqlUsuario, PreparedStatement.RETURN_GENERATED_KEYS)) {
+                stmtUsuario.setString(1, helloBean.getName());
+                stmtUsuario.setInt(2, helloBean.getAge());
+                stmtUsuario.setString(3, helloBean.getGender());
                 stmtUsuario.executeUpdate();
-            }
 
+                // Obter o id gerado para a tabela_usuario
+                ResultSet generatedKeys = stmtUsuario.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    int idUsuario = generatedKeys.getInt(1);
+                    // Agora você pode usar o idUsuario para outras operações
+                } else {
+                    throw new SQLException("Falha ao obter o ID gerado para tabela_usuario.");
+                }
+            }
             // Obter o id gerado para a tabela_usuario
             int idUsuario;
             try (PreparedStatement stmtIdUsuario = conexao.prepareStatement("SELECT LASTVAL()");

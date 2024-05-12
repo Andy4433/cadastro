@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 >
 
 <h:head>
@@ -21,15 +22,17 @@
             <th>Estado</th>
             <th>Cidade</th>
         </tr>
-        <tr>
-            <td>#{helloBean.nome}</td>
-            <td>#{helloBean.genero}</td>
-            <td>#{helloBean.idade}</td>
-            <td>#{helloBean.cep}</td>
-            <td>#{helloBean.rua}</td>
-            <td>#{helloBean.estado}</td>
-            <td>#{helloBean.cidade}</td>
-        </tr>
+        <ui:repeat value="#{dadosBean.dadosList}" var="dado">
+            <tr>
+                <td>#{dado.name}</td>
+                <td>#{dado.gender}</td>
+                <td>#{dado.age}</td>
+                <td>#{dado.cep}</td>
+                <td>#{dado.rua}</td>
+                <td>#{dado.estado}</td>
+                <td>#{dado.cidade}</td>
+            </tr>
+        </ui:repeat>
     </table>
 </h:body>
 </html>
