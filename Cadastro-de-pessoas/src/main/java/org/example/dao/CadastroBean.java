@@ -24,56 +24,61 @@ public class CadastroBean implements Serializable {
     // Getters e Setters do helloBean (remova-os se não forem necessários)
 
     public String cadastrar() {
-        try {
-            ConexaoPostgreSQL conexaoPostgreSQL = new ConexaoPostgreSQL();
-            Connection conexao = conexaoPostgreSQL.conectar();
+        try (Connection conexao = new ConexaoPostgreSQL().conectar()) {
+            System.out.println("Conexão com o banco de dados estabelecida com sucesso!");
 
-            // Faça o que precisar com o HelloBean
-            System.out.println("Dados do HelloBean:");
-            System.out.println("Verificando tabela ...");
+            // Criar tabela se não existir
             String sqlTabelaUsuario = "CREATE TABLE IF NOT EXISTS tabela_usuario (id SERIAL PRIMARY KEY, nome VARCHAR(100), idade INTEGER, genero VARCHAR(1))";
-            System.out.println("Tabela encontrada !!! ");
-            PreparedStatement stmtTabelaUsuario = conexao.prepareStatement(sqlTabelaUsuario);
-            String sqlUsuario = "INSERT INTO tabela_usuario (id, nome, idade, genero) VALUES (?,?, ?, ?)";
-            PreparedStatement stmtUsuario = conexao.prepareStatement(sqlUsuario);
-            stmtUsuario.setInt(1, helloBean.getId());
-            stmtUsuario.setString(2, helloBean.getName());
-            stmtUsuario.setInt(3, helloBean.getAge());
-            stmtUsuario.setString(4, helloBean.getGender());
+            try (PreparedStatement stmtTabelaUsuario = conexao.prepareStatement(sqlTabelaUsuario)) {
+                stmtTabelaUsuario.executeUpdate();
+                System.out.println("Tabela criada");
+            }
 
-            stmtUsuario.executeUpdate();
-            stmtUsuario.close();
+
+            String sqlUsuario = "INSERT INTO tabela_usuario (id, nome, idade, genero) VALUES (?, ?, ?, ?)";
+            try (PreparedStatement stmtUsuario = conexao.prepareStatement(sqlUsuario)) {
+                stmtUsuario.setInt(1, helloBean.getId());
+                stmtUsuario.setString(2, helloBean.getName());
+                stmtUsuario.setInt(3, helloBean.getAge());
+                stmtUsuario.setString(4, helloBean.getGender());
+                stmtUsuario.executeUpdate();
+            }
 
             // Obter o id gerado para a tabela_usuario
-            int idUsuario = 0;
-            PreparedStatement stmtIdUsuario = conexao.prepareStatement("SELECT LASTVAL()");
-            ResultSet rsIdUsuario = stmtIdUsuario.executeQuery();
-            if (rsIdUsuario.next()) {
+            int idUsuario;
+            try (PreparedStatement stmtIdUsuario = conexao.prepareStatement("SELECT LASTVAL()");
+                 ResultSet rsIdUsuario = stmtIdUsuario.executeQuery()) {
+                rsIdUsuario.next();
                 idUsuario = rsIdUsuario.getInt(1);
             }
-            rsIdUsuario.close();
-            stmtIdUsuario.close();
+
+            // Criar tabela_endereco se não existir
+            String sqlTabelaEndereco = "CREATE TABLE IF NOT EXISTS tabela_endereco (id SERIAL PRIMARY KEY, id_usuario INTEGER REFERENCES tabela_usuario(id), cep VARCHAR(10), rua VARCHAR(100), estado VARCHAR(2), cidade VARCHAR(100))";
+            try (PreparedStatement stmtTabelaEndereco = conexao.prepareStatement(sqlTabelaEndereco)) {
+                stmtTabelaEndereco.executeUpdate();
+            }
 
             // Inserir dados na tabela_endereco
-            String sqlTabelaEndereco = "CREATE TABLE IF NOT EXISTS tabela_endereco (id SERIAL PRIMARY KEY, id_usuario INTEGER REFERENCES tabela_usuario(id), cep VARCHAR(10), rua VARCHAR(100), estado VARCHAR(2), cidade VARCHAR(100))";
-            PreparedStatement stmtTabelaEndereco = conexao.prepareStatement(sqlTabelaEndereco);
             String sqlEndereco = "INSERT INTO tabela_endereco (id_usuario, cep, rua, estado, cidade) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement stmtEndereco = conexao.prepareStatement(sqlEndereco);
-            stmtEndereco.setInt(1, idUsuario);
-            stmtEndereco.setString(2, helloBean.getCep());
-            stmtEndereco.setString(3, helloBean.getRua());
-            stmtEndereco.setString(4, helloBean.getEstado());
-            stmtEndereco.setString(5, helloBean.getCidade());
-            stmtEndereco.executeUpdate();
-            stmtEndereco.close();
+            try (PreparedStatement stmtEndereco = conexao.prepareStatement(sqlEndereco)) {
+                stmtEndereco.setInt(1, idUsuario);
+                stmtEndereco.setString(2, helloBean.getCep());
+                stmtEndereco.setString(3, helloBean.getRua());
+                stmtEndereco.setString(4, helloBean.getEstado());
+                stmtEndereco.setString(5, helloBean.getCidade());
+                stmtEndereco.executeUpdate();
+            }
 
-            conexao.close();
-
+            // Redirecionar para página dados.xhtml em caso de sucesso
             FacesContext.getCurrentInstance().getExternalContext().redirect("dados.xhtml");
             return "sucesso";
-        } catch (SQLException | IOException e) {
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "erro";
+        } catch (SQLException e) {
             e.printStackTrace();
             return "erro";
         }
     }
 }
+
