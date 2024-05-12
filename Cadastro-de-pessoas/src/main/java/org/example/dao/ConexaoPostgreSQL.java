@@ -9,15 +9,14 @@ public class ConexaoPostgreSQL {
 
     public Connection conectar() throws SQLException {
         System.out.println("Início PostgreSQLMySQL");
-        Connection conexao = null;
+        Connection conexao = DriverManager.getConnection(
+                "jdbc:postgresql://localhost:5432/Cadastros",
+                "postgres", "admin");
+
         try {
             if (!existeBancoDeDados(conexao, "Cadastros")) {
                 criarBancoDeDados(conexao, "Cadastros");
             }
-            // Agora conecta ao banco de dados específico
-            conexao = DriverManager.getConnection(
-                    "jdbc:postgresql://localhost:5432/Cadastros",
-                    "postgres", "admin");
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
@@ -38,4 +37,3 @@ public class ConexaoPostgreSQL {
         System.out.println("Banco de dados criado com sucesso: " + nomeBanco);
     }
 }
-
