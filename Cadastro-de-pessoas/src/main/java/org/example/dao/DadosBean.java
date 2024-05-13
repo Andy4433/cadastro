@@ -44,7 +44,7 @@ public class DadosBean implements Serializable {
                 dado.setCidade(rs.getString("cidade"));
                 dados.add(dado);
             }
-
+            System.out.println(sql);
             rs.close();
             stmt.close();
             conexao.close();

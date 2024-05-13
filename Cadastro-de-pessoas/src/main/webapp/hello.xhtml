@@ -40,7 +40,9 @@
             <h:inputText id="cidade" value="#{helloBean.cidade}" />
 
             <h:panelGroup /> <!-- Espaço em branco -->
-            <p:commandButton value="Cadastrar" action="#{CadastroBean.cadastrar}" />
+            <p:commandButton value="Cadastrar" action="#{CadastroBean.cadastrar(helloBean.age, helloBean.name, helloBean.gender, helloBean.cep, helloBean.num, helloBean.rua, helloBean.estado, helloBean.cidade)}" />
+
+
         </p:panelGrid>
     </h:form>
 </h:body>

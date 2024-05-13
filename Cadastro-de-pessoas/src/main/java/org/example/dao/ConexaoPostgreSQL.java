@@ -15,12 +15,18 @@ public class ConexaoPostgreSQL {
 
             // Conectar ao banco de dados "postgres"
             conexao = DriverManager.getConnection(
-                    "jdbc:postgresql://localhost:5432/cadastros",
+                    "jdbc:postgresql://localhost:5432/postgres",
                     "postgres", "xxxxxxx");
 
+            // Criar o banco de dados "cadastros" se não existir
             if (!existeBancoDeDados(conexao, "cadastros")) {
                 criarBancoDeDados(conexao, "cadastros");
             }
+
+            // Conectar ao banco de dados "cadastros"
+            conexao = DriverManager.getConnection(
+                    "jdbc:postgresql://localhost:5432/cadastros",
+                    "postgres", "xxxxxxx");
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             try {
