@@ -16,7 +16,7 @@ JDBC: Para a conexão e manipulação do banco de dados PostgreSQL.
 
 Compilação e Execução do Projeto
 Clone o repositório para sua máquina local.
-Importe o projeto em sua IDE preferida (Eclipse, IntelliJ, etc.).
+Importe o projeto em sua IDE preferida (Eclipse).
 Certifique-se de ter o servidor Apache Tomcat configurado na IDE.
 Configure o banco de dados PostgreSQL e ajuste as configurações de conexão no arquivo ConexaoPostgreSQL.java.
 Execute o projeto no servidor Tomcat.
