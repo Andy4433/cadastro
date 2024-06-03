@@ -54,6 +54,7 @@
         <h1>Bem-vindo ao Sistema de Cadastro de Usuários</h1>
         <a href="Usuarioform.html" class="button">Criar Novo Usuário</a>
         <a href="ViewUsuarios.jsp" class="button button-red">Consultar Usuários</a>
+        <a href="ViewEnderecos.jsp" class="button button-red">Consultar endereço</a>
     </div>
 </body>
 </html>
